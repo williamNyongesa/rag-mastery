@@ -1,0 +1,29 @@
+Artificial Intelligence (AI) is the simulation of human intelligence processes by machines, 
+especially computer systems. AI research has been highly successful in developing effective 
+techniques for solving a wide range of problems, from game playing to medical diagnosis.
+
+Machine Learning is a subset of AI that provides systems the ability to automatically learn 
+and improve from experience without being explicitly programmed. Machine learning focuses on 
+the development of computer programs that can access data and use it to learn for themselves.
+
+Deep Learning is part of a broader family of machine learning methods based on artificial 
+neural networks with representation learning. Deep learning architectures such as deep neural 
+networks, recurrent neural networks, and convolutional neural networks have been applied to 
+fields including computer vision, speech recognition, and natural language processing.
+
+Natural Language Processing (NLP) is a subfield of linguistics, computer science, and 
+artificial intelligence concerned with the interactions between computers and human language, 
+in particular how to program computers to process and analyze large amounts of natural 
+language data. NLP is used in applications like chatbots, translation, and sentiment analysis.
+
+Vector databases are specialized database systems designed to store and query high-dimensional 
+vectors efficiently. They are a key component in modern AI applications, particularly in 
+Retrieval Augmented Generation systems. Vector databases use algorithms like HNSW and IVF 
+to perform approximate nearest neighbor search at scale, enabling fast semantic search over 
+millions of documents.
+
+Retrieval Augmented Generation (RAG) is a technique that combines information retrieval with 
+text generation. Instead of relying solely on the knowledge encoded in model parameters, RAG 
+systems retrieve relevant documents from an external knowledge base and use them as context 
+for generating responses. This approach reduces hallucinations and keeps responses grounded 
+in factual information.
