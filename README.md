@@ -31,8 +31,8 @@ RAG solves two problems with standard LLMs:
 |-----|-------|--------|
 | 01 | RAG Theory + Pipeline Mental Model | ✅ Done |
 | 02 | Text Chunking with RecursiveCharacterTextSplitter | ✅ Done |
-| 03 | Embeddings — Text to Vectors | 🔄 Up next |
-| 04 | Vector Stores with ChromaDB | ⬜ Pending |
+| 03 | Embeddings — Text to Vectors | ✅ Done |
+| 04 | Vector Stores with ChromaDB | 🔄 up next |
 | 05 | Retrieval — Top-K Similarity Search | ⬜ Pending |
 | 06 | Generation — LLM + Context | ⬜ Pending |
 | 07 | Project 1: Basic RAG over a PDF | ⬜ Pending |
@@ -105,6 +105,30 @@ i is printed as 1 k is printed as Machine Learning is a subset of AI...
 
 **Why RecursiveCharacterTextSplitter?**
 It splits at natural boundaries — paragraphs first, then sentences, then words — keeping every chunk semantically meaningful. A dumb character split would cut mid-word and destroy meaning.
+
+---
+## Day 3 — Embeddings
+
+**Concept:** Each chunk is passed through an embedding model which converts 
+it into a vector of 384 numbers. Similar meaning = similar vector. 
+This is what makes semantic search possible.
+
+**Model used:** `all-MiniLM-L6-v2` from sentence-transformers — free, local, no API key needed.
+
+**Run it:**
+```bash
+python day3_embeddings.py
+```
+
+**Output:**
+```
+Chunk 0 vector (first 10): [-0.0382  0.0215 -0.0044 ...]
+Query vector (first 10):   [-0.0199  0.0098  0.0102 ...]
+```
+
+**Key insight:** The query and the ML chunk have similar vectors because 
+they share the same topic. Cosine similarity measures the angle between 
+two vectors — small angle = high similarity = retrieved chunk.
 
 ---
 
