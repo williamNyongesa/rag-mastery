@@ -32,8 +32,8 @@ RAG solves two problems with standard LLMs:
 | 01 | RAG Theory + Pipeline Mental Model | ✅ Done |
 | 02 | Text Chunking with RecursiveCharacterTextSplitter | ✅ Done |
 | 03 | Embeddings — Text to Vectors | ✅ Done |
-| 04 | Vector Stores with ChromaDB | 🔄 up next |
-| 05 | Retrieval — Top-K Similarity Search | ⬜ Pending |
+| 04 | Vector Stores with ChromaDB | ✅ Done |
+| 05 | Retrieval — Top-K Similarity Search | 🔄 Up next |
 | 06 | Generation — LLM + Context | ⬜ Pending |
 | 07 | Project 1: Basic RAG over a PDF | ⬜ Pending |
 | 08 | Hybrid Search (Dense + Sparse) | ⬜ Pending |
@@ -57,7 +57,10 @@ RAG solves two problems with standard LLMs:
 ```
 rag-mastery/
 ├── day2_chunking.py       # Text splitting with RecursiveCharacterTextSplitter
-├── sample.txt             # Test document used for chunking experiments
+├── day3_embeddings.py     # Text to vectors with sentence-transformers
+├── day4_vectorstore.py    # ChromaDB vector store + semantic search
+├── sample.txt             # Test document used across all scripts
+├── chroma_db/             # Persistent vector database (auto-generated)
 ├── requirements.txt       # All dependencies
 ├── venv/                  # Virtual environment (not tracked)
 └── README.md
@@ -107,10 +110,11 @@ i is printed as 1 k is printed as Machine Learning is a subset of AI...
 It splits at natural boundaries — paragraphs first, then sentences, then words — keeping every chunk semantically meaningful. A dumb character split would cut mid-word and destroy meaning.
 
 ---
+
 ## Day 3 — Embeddings
 
-**Concept:** Each chunk is passed through an embedding model which converts 
-it into a vector of 384 numbers. Similar meaning = similar vector. 
+**Concept:** Each chunk is passed through an embedding model which converts
+it into a vector of 384 numbers. Similar meaning = similar vector.
 This is what makes semantic search possible.
 
 **Model used:** `all-MiniLM-L6-v2` from sentence-transformers — free, local, no API key needed.
@@ -126,9 +130,40 @@ Chunk 0 vector (first 10): [-0.0382  0.0215 -0.0044 ...]
 Query vector (first 10):   [-0.0199  0.0098  0.0102 ...]
 ```
 
-**Key insight:** The query and the ML chunk have similar vectors because 
-they share the same topic. Cosine similarity measures the angle between 
+**Key insight:** The query and the ML chunk have similar vectors because
+they share the same topic. Cosine similarity measures the angle between
 two vectors — small angle = high similarity = retrieved chunk.
+
+---
+
+## Day 4 — Vector Store
+
+**Concept:** Vectors stored in memory disappear when the script stops. ChromaDB
+is a persistent vector database that saves vectors to disk and enables
+semantic search in one line of code.
+
+**How it works:**
+- `PersistentClient` — saves the database to `./chroma_db/` folder on disk
+- `get_or_create_collection` — creates or opens a named collection
+- `collection.add()` — stores chunks, their vectors, and unique IDs
+- `collection.query()` — searches for Top-K most similar chunks
+
+**Run it:**
+```bash
+python day4_vectorstore.py
+```
+
+**Output:**
+```
+['Machine Learning is a subset of AI that provides systems the ability 
+to automatically learn and improve from experience...',
+'Artificial Intelligence (AI) is the simulation of human intelligence 
+processes by machines...']
+```
+
+**Key insight:** The query "What is machine learning?" retrieved the ML chunk
+first and the AI chunk second — because their vectors are closest in direction
+to the query vector. The RAG, NLP and other chunks were ignored as less relevant.
 
 ---
 
